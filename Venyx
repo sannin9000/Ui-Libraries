@@ -1770,11 +1770,20 @@ do
 		local focused
 		
 		list = list or {}
+
+        button.MouseButton1Click:Connect(function()
+            if callback then
+                callback(value, function(...)
+                    self:updateDropdown(dropdown, nil, list, callback) -- could also be self:updateDropdown(dropdown, nil, list, callback)
+                end)	
+            end
+        end) -- why not twice?
+
 		
 		search.Button.MouseButton1Click:Connect(function()
             if callback then
                 callback(value, function(...)
-                    self:updateDropdown(dropdown, nil, nil, callback) -- could also be self:updateDropdown(dropdown, nil, list, callback)
+                    self:updateDropdown(dropdown, nil, list, callback) -- could also be self:updateDropdown(dropdown, nil, list, callback)
                 end)	
             end
 
