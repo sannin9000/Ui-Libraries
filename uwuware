@@ -1472,6 +1472,8 @@ local function getFnctions(parent)
 		option.text = tostring(option.text)
 		option.type = "label"
 		option.position = #self.options
+		option.flag = option.flag or option.text
+		library.flags[option.flag] = option.text
 		table.insert(self.options, option)
 		
 		return option
