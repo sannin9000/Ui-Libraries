@@ -1550,7 +1550,7 @@ local function getFnctions(parent)
 		option.type = "list"
 		option.position = #self.options
 		option.flag = option.flag or option.text
-		library.flags[option.flag] = option.values
+		library.flags[option.flag] = option.values or option.value
 		table.insert(self.options, option)
 		
 		return option
