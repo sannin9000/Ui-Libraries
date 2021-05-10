@@ -854,6 +854,15 @@ local function createList(option, parent, holder)
 		end
 	end
 	
+	function option:Clear()
+		for _,label in next, content:GetChildren() do
+			if label:IsA"TextLabel" then
+				label:Destroy()
+			end
+		end
+		self:SetValue("")
+	end
+	
 	function option:SetValue(value)
 		library.flags[self.flag] = tostring(value)
 		self.value = tostring(value)
