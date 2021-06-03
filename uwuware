@@ -1,3 +1,6 @@
+--modified uwuware by  sannin
+
+--thanks to egg salad for this
 if not pcall(function() return syn.protect_gui end) then
   syn = {}
   syn.protect_gui = function(ui)
