@@ -1539,7 +1539,7 @@ local function getFnctions(parent)
 		option.min = typeof(option.min) == "number" and option.min or 0
 		option.max = typeof(option.max) == "number" and option.max or 0
 		option.dual = typeof(option.dual) == "boolean" and option.dual or false
-		option.value = typeof(option.value) == "number" or 0
+		option.value = math.clamp(typeof(option.value) == "number" and option.value or option.min, option.min, option.max)
 		option.value2 = typeof(option.value2) == "number" and option.value2 or option.max
 		option.callback = typeof(option.callback) == "function" and option.callback or function() end
 		option.float = typeof(option.value) == "number" and option.float or 1
