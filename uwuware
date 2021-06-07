@@ -1629,17 +1629,19 @@ end
 local UIToggle
 local UnlockMouse
 function library:Init()
-	
 	self.base = self.base or self:Create("ScreenGui")
 	if syn and syn.protect_gui then
 		syn.protect_gui(self.base)
+		self.base.Parent = game:GetService"CoreGui"
 	elseif get_hidden_gui then
 		get_hidden_gui(self.base)
+		self.base.Parent = game:GetService"CoreGui"
+	elseif gethui then
+		self.base.Parent = gethui()
 	else
-		game:GetService"Players".LocalPlayer:Kick("Error: protect_gui function not found")
-		return
+		warn("Error: Didnt find a protect gui function, UI is unsafe!")
+		self.base.Parent = game:GetService"CoreGui"
 	end
-	self.base.Parent = game:GetService"CoreGui"
 	
 	for _, window in next, self.windows do
 		if window.canInit and not window.init then
