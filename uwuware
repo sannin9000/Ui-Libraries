@@ -200,7 +200,6 @@ local function createLabel(option, parent)
 		library.flags[self.flag] = tostring(value)
 		self.value = tostring(value)
 		main.Text = " "..tostring(value)
-		self.callback(value)
 	end
 	setmetatable(option, {__newindex = function(t, i, v)
 		if i == "Text" then
