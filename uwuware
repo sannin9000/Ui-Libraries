@@ -1508,6 +1508,15 @@ local function getFnctions(parent)
 		return option
 	end
 	
+	function parent:AddDivider(option)
+		option = type(option) == 'table' and option or {}
+		option.type = 'divider'
+		option.position = #self.options
+		table.insert(self.options, option)
+
+		return options
+	end
+	
 	function parent:AddToggle(option)
 		option = typeof(option) == "table" and option or {}
 		option.text = tostring(option.text)
