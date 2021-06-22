@@ -1,12 +1,4 @@
---modified uwuware by  sannin
-
---thanks to egg salad for this
-if not pcall(function() return syn.protect_gui end) then
-  syn = {}
-  syn.protect_gui = function(ui)
-      ui.Parent = game.CoreGui
-  end
-end
+--modified uwuware ui lib by sannin
 
 local library = {flags = {}, windows = {}, open = true}
 
@@ -1634,12 +1626,11 @@ function library:Init()
 		syn.protect_gui(self.base)
 		self.base.Parent = game:GetService"CoreGui"
 	elseif get_hidden_gui then
-		get_hidden_gui(self.base)
-		self.base.Parent = game:GetService"CoreGui"
+		self.base.Parent = get_hidden_gui()
 	elseif gethui then
 		self.base.Parent = gethui()
 	else
-		warn("Error: Didnt find a protect gui function, UI is unsafe!")
+		self.base.Name = math.random()
 		self.base.Parent = game:GetService"CoreGui"
 	end
 	
@@ -1679,14 +1670,5 @@ inputService.InputBegan:connect(function(input)
 	end
 end)
 
-inputService.InputChanged:connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement and library.cursor then
-		local mouse = inputService:GetMouseLocation() + Vector2.new(0, -36)
-		library.cursor.Position = UDim2.new(0, mouse.X - 2, 0, mouse.Y - 2)
-	end
-	if input == dragInput and dragging then
-		update(input)
-	end
-end)
 
 return library
