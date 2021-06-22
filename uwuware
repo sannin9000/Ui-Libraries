@@ -200,7 +200,7 @@ local function createLabel(option, parent)
 	function option:SetValue(value)
 		library.flags[self.flag] = tostring(value)
 		self.value = tostring(value)
-		listvalue.Text = self.value
+		main.Text = self.value
 		self.callback(value)
 	end
 	
