@@ -197,18 +197,17 @@ local function createLabel(option, parent)
 		Parent = parent.content
 	})
 	
+	setmetatable(option, {__newindex = function(t, i, v)
+		if i == "Text" then
+			main.Text = " " .. tostring(v)
+		end
+	end})
 	function option:SetValue(value)
 		library.flags[self.flag] = tostring(value)
 		self.value = tostring(value)
 		main.Text = tostring(value)
 		self.callback(value)
 	end
-	
-	setmetatable(option, {__newindex = function(t, i, v)
-		if i == "Text" then
-			main.Text = " " .. tostring(v)
-		end
-	end})
 end
 
 function createToggle(option, parent)
