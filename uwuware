@@ -193,7 +193,7 @@ local function createLabel(option, parent)
 		TextSize = 17,
 		Font = Enum.Font.Gotham,
 		TextColor3 = Color3.fromRGB(255, 255, 255),
-		TextXAlignment = Enum.TextXAlignment.Center,
+		TextXAlignment = option.alignment,
 		Parent = parent.content
 	})
 	function option:SetText(text)
@@ -1504,10 +1504,9 @@ local function getFnctions(parent)
 	function parent:AddLabel(option)
 		option = typeof(option) == "table" and option or {}
 		option.text = tostring(option.text)
+		option.alignment = typeof(option.alignment) == "number" and option.alignment or 0
 		option.type = "label"
 		option.position = #self.options
-		option.flag = option.flag or option.text
-		library.flags[option.flag] = option.text
 		table.insert(self.options, option)
 		
 		return option
