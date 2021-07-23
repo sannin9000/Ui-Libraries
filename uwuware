@@ -838,11 +838,7 @@ local function createList(option, parent, holder)
 	end
 	
 	for _, value in next, option.values do
-		if not type(value) == "table" then
-			option:AddValue(tostring(value))
-		else
-			option:AddValue(tostring(_))
-		end	
+		option:AddValue(tostring(value))
 	end
 	
 	function option:RemoveValue(value)
