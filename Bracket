@@ -43,19 +43,25 @@ local function MakeDraggable(TopbarObject, Object)
 	end)
 end
 
-function Library:CreateWindow(Config, Parent)
+function Library:CreateWindow(Config)
 	local WindowInit = {}
     local Folder = game:GetObjects("rbxassetid://7141683860")[1]
 	local Screen = Folder.Bracket:Clone()
-    syn.protect_gui(Screen)
 	local Main = Screen.Main
 	local Holder = Main.Holder
 	local Topbar = Main.Topbar
 	local TContainer = Holder.TContainer
 	local TBContainer = Holder.TBContainer.Holder
 
-	Screen.Name =  HttpService:GenerateGUID(false)
-	Screen.Parent = Parent
+	if syn and syn.protect_gui then
+		syn.protect_gui(Screen)
+		Screen.Parent = game.CoreGui
+	elseif gethui then
+		Screen.Parent = gethui()
+	else
+		Screen.Name = math.random()
+		Screen.Parent = game.CoreGui
+	end
 	Topbar.WindowName.Text = Config.WindowName
 
 	MakeDraggable(Topbar,Main)
@@ -276,16 +282,17 @@ function Library:CreateWindow(Config, Parent)
 
 				return ButtonInit
 			end
-			function SectionInit:CreateToggle(Name, Callback)
+			function SectionInit:CreateToggle(Name,Default,Callback)
 				local ToggleInit = {}
 				local Toggle = Folder.Toggle:Clone()
+				local ToggleState = Default or false
+
 				Toggle.Name = Name .. " T"
 				Toggle.Parent = Section.Container
 				Toggle.Title.Text = Name
 				Toggle.Size = UDim2.new(1,-10,0,Toggle.Title.TextBounds.Y + 5)
 
 				table.insert(Library.ColorTable, Toggle.Toggle)
-				local ToggleState = false
 
 				local function SetState(State)
 					if State then
@@ -559,6 +566,21 @@ function Library:CreateWindow(Config, Parent)
 				function DropdownInit:GetOption()
 					return Dropdown.Container.Value.Text
 				end
+
+				function DropdownInit:RemoveOption(option)
+					for i,v in pairs(Dropdown.Container.Holder.Container:GetChildren()) do
+						if v.Name == option.." O" then
+							v:Destroy()
+						end
+					end
+				end
+
+				function DropdownInit:ClearOptions()
+					for i,v in pairs(Dropdown.Container.Holder.Container:GetChildren()) do
+						v:Destroy()
+					end
+				end
+
 				return DropdownInit
 			end
 			function SectionInit:CreateColorpicker(Name,Callback)
